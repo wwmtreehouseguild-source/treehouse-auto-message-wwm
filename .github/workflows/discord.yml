@@ -1,0 +1,33 @@
+name: Discord Weekly Registration
+
+on:
+  schedule:
+    # 21:05 Vancouver time
+    # Wednesday, Thursday, Friday
+    #
+    # GitHub Actions cron uses UTC.
+    # Vancouver is PDT (UTC-7) during daylight saving time.
+    - cron: "5 4 * * 4,5,6"
+
+  workflow_dispatch:
+
+jobs:
+  send-discord-message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send Discord message
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python send_discord.py
