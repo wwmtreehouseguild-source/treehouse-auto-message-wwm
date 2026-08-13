@@ -2,7 +2,7 @@ name: Discord Weekly Registration
 
 on:
   schedule:
-    - cron: "5 4 * * 4,5,6"
+    - cron: "*/15 * * * *"
 
   workflow_dispatch:
 
