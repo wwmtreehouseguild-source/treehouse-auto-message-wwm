@@ -2,7 +2,12 @@ name: Discord Weekly Registration
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    # 21:05 Vancouver time
+    # Wednesday, Thursday, Friday
+    #
+    # GitHub Actions cron uses UTC.
+    # Vancouver is PDT (UTC-7) during daylight saving time.
+    - cron: "*/10 * * * *"
 
   workflow_dispatch:
 
