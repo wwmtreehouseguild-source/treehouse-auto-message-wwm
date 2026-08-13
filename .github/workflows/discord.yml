@@ -1,16 +1,28 @@
 name: Discord Weekly Registration
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "* * * * *"
+
+  workflow_dispatch:
 
 jobs:
-  test-schedule:
+  send-discord-message:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test
-        run: |
-          echo "Scheduled workflow is running"
-          date
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send Discord message
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python send_discord.py
